@@ -1,0 +1,115 @@
+import java.util.Scanner;
+
+public class main {
+
+    static boolean pernahkah(String[] data, String yangdicek, int keberapa) {
+        if (keberapa == 0)
+            return false;
+        for (int a = keberapa - 1; a >= 0; a--) {
+            if (data[keberapa].equals(data[a])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    static boolean benarkah(String[] referensi, String tebakan) {
+        // periksa apakah tebakan benar / salah sesuai kamus
+        for (int a = 0; a < referensi.length; a++) {
+            if (referensi[a].equals(tebakan)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String args[]) {
+        System.out.println("TEBAK KATA APAAN TUH");
+        System.out.println("====================");
+
+        System.out.println("\nAturan main:");
+        System.out.println("1. itulah");
+        System.out.println("2. ya itu");
+        System.out.println("3. nah itu");
+
+        char[][] soal = {
+                { 't', 'n', 'e', 's', 'a', 'r' },
+                { 'c', 'e', 's', 'l', 'r', 'a' },
+                { 'n', 'l', 's', 'i', 'o', 't' }
+        };
+        String[][] kamus = {
+                { "antres", "astern", "sterna", "antes", "antre", "aster", "earns", "etnas", "nares", "nates", "nears",
+                        "neats", "nerts", "rants", "rates", "rents", "resat", "saner", "snare", "stane", "stare",
+                        "stern", "tares", "tarns", "taser", "tears", "terns", "trans", "anes", "ante", "ants", "ares",
+                        "arse", "arts", "ates", "earn", "ears", "east", "eats", "eras", "erns", "erst", "etas", "etna",
+                        "naes", "near", "neat", "nest", "nets", "rant", "rase", "rate", "rats", "rent", "rest", "rets",
+                        "sane", "sate", "sear", "seat", "sent", "sera", "seta", "star", "tans", "tare", "tarn", "tars",
+                        "tase", "tear", "teas", "tens", "tern", "tres", "tsar", "ane", "ant", "are", "ars", "art",
+                        "ate", "ear", "eat", "ens", "era", "ern", "ers", "est", "eta", "nae", "net", "ran", "ras",
+                        "rat", "res", "ret", "sae", "san", "sat", "sea", "sen", "ser", "set", "tae", "tan", "tar",
+                        "tas", "tea", "ten", "tes" },
+                { "carles", "clears", "lacers", "scaler", "sclera", "acres", "alecs", "arles", "cares", "carle",
+                        "carls", "carse", "clear", "earls", "escar", "lacer", "laces", "lares", "laser", "lears",
+                        "races", "rales", "reals", "scale", "scare", "serac", "seral", "aces", "acre", "alec", "ales",
+                        "arcs", "ares", "arse", "cals", "care", "carl", "cars", "case", "cels", "earl", "ears", "eras",
+                        "lace", "lacs", "lars", "lase", "lear", "leas", "race", "rale", "rase", "real", "recs", "sale",
+                        "scar", "seal", "sear", "sera", "ace", "ale", "als", "arc", "are", "ars", "cal", "car", "cel",
+                        "ear", "els", "era", "ers", "lac", "lar", "las", "lea", "les", "ras", "rec", "res", "sac",
+                        "sae", "sal", "sea", "sec", "sel", "ser" },
+                { "tonsil", "linos", "lints", "lions", "loins", "noils", "toils", "into", "ions", "lino", "lins",
+                        "lint", "lion", "list", "lits", "loin", "lost", "loti", "lots", "nils", "nits", "noil", "oils",
+                        "silo", "silt", "slit", "slot", "snit", "snot", "soil", "soli", "tils", "tins", "toil", "tons",
+                        "ins", "ion", "its", "lin", "lis", "lit", "lot", "nil", "nit", "nos", "not", "oil", "ons",
+                        "sin", "sit", "sol", "son", "sot", "til", "tin", "tis", "ton" }
+        };
+        String[][] tebakan = {
+                { "", "", "", "", "", "", "", "", "", "" },
+                { "", "", "", "", "", "", "", "", "", "" },
+                { "", "", "", "", "", "", "", "", "", "" }
+        };
+
+        int poin = 0, skor = 0;
+        Scanner inp = new Scanner(System.in);
+
+        for (int level = 1; level <= 3; level++) {
+            System.out.println("\nLEVEL " + level);
+            System.out.println("-----------");
+
+            for (int a = 0; a < soal[level - 1].length; a++) {
+                System.out.print("     " + soal[level - 1][a] + "     ");
+            }
+            System.out.println("\n-------------------------------------------------------------------------");
+            for (int jawab = 0; jawab < 10; jawab++) {
+                System.out.println(jawab + 1 + ") Jawabanmu: ");
+                tebakan[level - 1][jawab] = inp.nextLine();
+
+                if (pernahkah(tebakan[level - 1], tebakan[level - 1][jawab], jawab)) {
+                    System.out.println("Jawaban sudah pernah, Poin 0");
+                } else {
+                    if (benarkah(kamus[level - 1], tebakan[level - 1][jawab])) {
+                        poin += 10;
+                        System.out.println("Jawaban anda benar! Poin +10");
+                    } else {
+                        System.out.println("Jawaban anda salah! Poin +0");
+                    }
+                }
+            }
+
+            System.out.println("Jumlah Poin anda " + poin);
+            skor = skor + poin;
+
+            if (poin >= 70) {
+                if (level < 3) {
+                    System.out.println("Selamat! Anda Lanjut ke Level Selanjutnya!");
+                    poin = 0;
+                } else
+                    System.out.println("SELAMAT ANDA MENANG DENGAN SKOR " + skor);
+            } else {
+                System.out.println("GAME OVER! Skor anda " + skor);
+                break;
+            }
+        }
+
+        inp.close();
+    }
+}
